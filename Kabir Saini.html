@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2; /* Ensure it's behind the canvas */
+            background: linear-gradient(
+                -45deg,
+                #0f172a,
+                #1e1b4b,
+                #134e4a,
+                #0f766e,
+                #4c1d95,
+                #065f46,
+                #0d9488,
+                #0f172a
+            );
+            background-size: 400% 400%;
+            animation: gradient-shift 15s ease infinite;
+        }
+
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(16, 185, 129, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(5, 150, 105, 0.1) 0%, transparent 70%);
+            animation: pulse-overlay 10s ease-in-out infinite alternate;
+        }
+
+        .animated-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 70% 20%, rgba(16, 185, 129, 0.1) 0%, transparent 60%),
+                radial-gradient(circle at 30% 80%, rgba(79, 70, 229, 0.1) 0%, transparent 60%);
+            animation: pulse-overlay-alt 15s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse-overlay {
+            0% {
+                opacity: 0.5;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.7;
+                transform: scale(1.05);
+            }
+            100% {
+                opacity: 0.8;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse-overlay-alt {
+            0% {
+                opacity: 0.3;
+                transform: scale(1.05);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0.7;
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes gradient-shift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .gradient-text {
+            background-size: 300% auto;
+            background-image: linear-gradient(
+                to right,
+                #00c6ff 0%,
+                #0072ff 20%,
+                #10b981 40%,
+                #059669 60%,
+                #7e22ce 80%,
+                #00c6ff 100%
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-text 6s linear infinite;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+        }
+
+        .gradient-text-alt {
+            background-size: 300% auto;
+            background-image: linear-gradient(
+                to right,
+                #10b981 0%,
+                #059669 20%,
+                #0072ff 40%,
+                #7e22ce 60%,
+                #ec4899 80%,
+                #10b981 100%
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-text 8s linear infinite;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+        }
+
+        h3 {
+            background-size: 300% auto;
+            background-image: linear-gradient(
+                to right,
+                #34d399 0%,
+                #10b981 25%,
+                #0d9488 50%,
+                #0891b2 75%,
+                #34d399 100%
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-text 8s linear infinite;
+            font-weight: 700;
+            text-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
+        }
+
+        .nav-link {
+            background-size: 200% auto;
+            background-image: linear-gradient(
+                to right,
+                #e0e0e0 0%,
+                #10b981 50%,
+                #e0e0e0 100%
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background-position: 100% center;
+            text-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+        }
+
+        @keyframes gradient-text {
+            0% {
+                background-position: 0% center;
+            }
+            100% {
+                background-position: 300% center;
+            }
+        }
+
+        .card {
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(
+                90deg,
+                #00c6ff,
+                #0072ff,
+                #10b981,
+                #059669,
+                #7e22ce,
+                #ec4899
+            );
+            background-size: 300% auto;
+            animation: gradient-border 6s linear infinite;
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(
+                90deg,
+                #ec4899,
+                #7e22ce,
+                #059669,
+                #10b981,
+                #0072ff,
+                #00c6ff
+            );
+            background-size: 300% auto;
+            animation: gradient-border 6s linear infinite reverse;
+            opacity: 0.5;
+        }
+
+        @keyframes gradient-border {
+            0% {
+                background-position: 0% center;
+            }
+            100% {
+                background-position: 300% center;
+            }
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 198, 255, 0.3);
+        }
+
+        .profile-bg {
+            background-size: cover;
+            background-position: center;
+            height: 200px;
+            border-radius: 0.5rem 0.5rem 0 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-photo {
+            width: 152px;
+            height: 152px;
+            border: 4px solid rgba(15, 23, 42, 0.7);
+            border-radius: 50%;
+            margin-top: -76px;
+            background: linear-gradient(145deg, #2d2d3d, #1a1a2e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .profile-photo::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to right bottom,
+                transparent 50%,
+                rgba(16, 185, 129, 0.1) 100%
+            );
+        }
+
+        .skill-pill {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.2) 100%);
+            color: #10b981;
+            border-radius: 2rem;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            transition: all 0.3s ease;
+            background-size: 200% auto;
+            animation: skill-pill-gradient 8s ease infinite;
+        }
+
+        @keyframes skill-pill-gradient {
+            0% {
+                background-position: 0% center;
+                border-color: rgba(16, 185, 129, 0.3);
+            }
+            50% {
+                background-position: 100% center;
+                border-color: rgba(124, 58, 237, 0.3);
+            }
+            100% {
+                background-position: 0% center;
+                border-color: rgba(16, 185, 129, 0.3);
+            }
+        }
+
+        .skill-pill:hover {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.4) 0%, rgba(5, 150, 105, 0.4) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        input, textarea {
+            background-color: rgba(45, 45, 61, 0.8);
+            border: 1px solid rgba(61, 61, 77, 0.8);
+            color: #e0e0e0;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #10b981;
+            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+            background-color: rgba(45, 45, 61, 1);
+        }
+
+        .btn-gradient {
+            background: linear-gradient(135deg, #0072ff 0%, #00c6ff 50%, #10b981 100%);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            background-size: 200% auto;
+            animation: btn-gradient 3s ease infinite;
+        }
+
+        @keyframes btn-gradient {
+            0% {
+                background-position: 0% center;
+            }
+            50% {
+                background-position: 100% center;
+            }
+            100% {
+                background-position: 0% center;
+            }
+        }
+
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+        }
+
+        .section-title {
+            position: relative;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 3px;
+            width: 60px;
+            background: linear-gradient(90deg, #10b981 0%, #059669 50%, #0072ff 100%);
+            background-size: 200% auto;
+            animation: gradient-border 3s linear infinite;
+        }
+
+        .icon-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .icon-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(transparent, rgba(16, 185, 129, 0.3), transparent 30%);
+            animation: rotate 4s linear infinite;
+        }
+
+        @keyframes rotate {
+            100% {
+                transform: rotate(1turn);
+            }
+        }
+
+        .glow {
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+        }
+
+        .bg-gradient-dark {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* Canvas for futuristic background */
+        #futuristicCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Above animated-bg but behind content */
+            pointer-events: none; /* Allows interaction with elements below canvas */
+        }
+
+        /* Enhanced gradient animations for text elements */
+        p {
+            position: relative;
+            z-index: 1;
+        }
+
+        .text-green-400 {
+            background-size: 200% auto;
+            background-image: linear-gradient(
+                to right,
+                #10b981 0%,
+                #34d399 50%,
+                #10b981 100%
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: subtle-gradient-text 8s linear infinite;
+        }
+
+        @keyframes subtle-gradient-text {
+            0% {
+                background-position: 0% center;
+            }
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        /* Animated border for sections */
+        .border-b {
+            position: relative;
+        }
+
+        .border-b::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(
+                to right,
+                rgba(16, 185, 129, 0.3),
+                rgba(124, 58, 237, 0.3),
+                rgba(16, 185, 129, 0.3)
+            );
+            background-size: 200% auto;
+            animation: border-gradient 6s linear infinite;
+        }
+
+        @keyframes border-gradient {
+            0% {
+                background-position: 0% center;
+            }
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        /* Certificate styles */
+        .certificate-card {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer; /* Add cursor pointer to indicate interactivity */
+        }
+
+        .certificate-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .certificate-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .certificate-card:hover::before {
+            opacity: 1;
+        }
+
+        .certificate-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.2) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .certificate-logo::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right bottom, transparent 50%, rgba(16, 185, 129, 0.2) 100%);
+        }
+
+        .certificate-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            /* Always green for 'Valid' */
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            animation: badge-pulse 2s infinite alternate;
+        }
+
+        .certificate-badge.expired {
+            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+        }
+
+        @keyframes badge-pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            }
+            100% {
+                transform: scale(1.05);
+                box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+            }
+        }
+
+        .credential-id-display { /* Changed class name for clarity */
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.5px;
+            background: rgba(16, 185, 129, 0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            border: 1px dashed rgba(16, 185, 129, 0.3);
+            word-break: break-all; /* Ensure long IDs wrap */
+        }
+
+        .show-credential-btn { /* This button is now removed from cards and handled by card click */
+            display: none;
+        }
+
+        .certificate-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .certificate-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .certificate-modal-content {
+            background: rgba(15, 23, 42, 0.95);
+            border-radius: 8px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            position: relative;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.3s ease 0.1s;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .certificate-modal.active .certificate-modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .certificate-modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: transparent;
+            border: none;
+            color: #e0e0e0;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .certificate-modal-close:hover {
+            color: #10b981;
+            transform: rotate(90deg);
+        }
+
+        .certificate-preview {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .certificate-preview::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 30% 40%, rgba(16, 185, 129, 0.1) 0%, transparent 60%),
+                radial-gradient(circle at 70% 60%, rgba(124, 58, 237, 0.1) 0%, transparent 60%);
+        }
+
+        .certificate-preview svg {
+            width: 80px;
+            height: 80px;
+            opacity: 0.5;
+        }
+
+        .copy-button {
+            background-color: #10b981;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-left: 0.5rem;
+            border: none;
+        }
+
+        .copy-button:hover {
+            background-color: #059669;
+        }
+
+        /* Styles for Honors & Awards section */
+        .award-item {
+            background: rgba(23, 30, 52, 0.8); /* Slightly different background for distinction */
+            border-radius: 0.75rem;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .award-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6), 0 0 18px rgba(16, 185, 129, 0.4);
+        }
+
+        .award-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #10b981, #0072ff, #7e22ce);
+            background-size: 300% auto;
+            animation: gradient-border 6s linear infinite;
+        }
+
+        .award-item img {
+            object-fit: cover;
+            border-radius: 0.5rem;
+            border: 2px solid rgba(16, 185, 129, 0.5);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .award-item .gradient-text-alt {
+            font-size: 1.3rem; /* Slightly larger title for awards */
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <canvas id="futuristicCanvas"></canvas> <nav class="bg-gradient-dark shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <h1 class="text-xl font-bold gradient-text">My Portfolio</h1>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <a href="#about" class="nav-link transition">About</a>
+                    <a href="#experience" class="nav-link transition">Experience</a>
+                    <a href="#education" class="nav-link transition">Education</a>
+                    <a href="#certificates" class="nav-link transition">Certificates</a>
+                    <a href="#honors-awards" class="nav-link transition">Honors & Awards</a>
+                    <a href="#skills" class="nav-link transition">Skills</a>
+                    <a href="#projects" class="nav-link transition">Projects</a>
+                    <a href="#contact" class="nav-link transition">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="card mb-8 floating">
+            <div class="profile-bg" style="background-image: url('https://i.imghippo.com/files/XLP8118wT.png');"></div>
+            <div class="px-6 pb-6">
+                <div class="flex justify-center">
+                    <div class="profile-photo">
+                        <img src="https://i.imghippo.com/files/jog5232AuI.jpeg" alt="Profile Photo" class="w-full h-full object-cover rounded-full">
+                    </div>
+                </div>
+                <h1 class="text-3xl font-bold mt-4 text-center gradient-text">Kabir Saini</h1>
+                <p class="text-xl text-gray-300 text-center mt-2">Tech Enthusiast | Passionate About IT, AI & Computer Science</p>
+                <p class="text-md text-gray-400 text-center mt-1">Noida , Uttar Pradesh, India</p>
+                <div class="mt-4 flex justify-center space-x-4">
+                    <a href="mailto:gamerkabir2009@gamil.com" class="flex items-center text-green-400 hover:text-green-300 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        gamerkabir2009@gamil.com
+                    </a>
+                    <a href="tel:+918076574###" class="flex items-center text-green-400 hover:text-green-300 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1c-7.284 0-14-6.716-14-14V5z" />
+                        </svg>
+                        8076574###
+                    </a>
+                    <a href="https://github.com/KABIR-SAINI" target="_blank" class="flex items-center text-green-400 hover:text-green-300 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        GitHub
+                    </a>
+                    <a href="https://www.linkedin.com/in/kabirsaini/" target="_blank" class="flex items-center text-green-400 hover:text-green-300 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                        LinkedIn
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card p-6 mb-8" id="about">
+            <h2 class="gradient-text-alt text-2xl font-bold section-title">About</h2>
+            <p class="text-gray-300">
+                Hi! I'm Kabir Saini, a 16-year-old student in 11th grade. I have a strong interest in technology, especially in IT, artificial intelligence (AI), and computer science.
+                I love learning new things—whether it's taking part in competitions or doing online courses to improve my skills.
+                I enjoy working with AI, learning how it works, and getting better at programming.
+                Every new challenge helps me grow and keeps me excited about creating new ideas.
+                I believe technology can solve big problems and make life better for everyone.
+                Even though I'm still in school, I’m motivated to make a difference in the tech world.
+            </p>
+        </div>
+
+        <div class="card p-6 mb-8" id="experience">
+            <h2 class="gradient-text text-2xl font-bold section-title">Experience</h2>
+            <p class="text-gray-300 text-center py-8">Coming Soon</p>
+        </div>
+
+        <div class="card p-6 mb-8" id="education">
+            <h2 class="gradient-text-alt text-2xl font-bold section-title">Education</h2>
+            <div class="mb-6 pb-6 border-b border-gray-700">
+                <div class="flex">
+                    <div class="mr-4">
+                        <div class="w-12 h-12 bg-green-900 bg-opacity-30 rounded-full flex items-center justify-center icon-container">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-400 relative z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.162 3.542a2 2 0 002.218-.323l.21-.161V16.5a2 2 0 00-2-2H5.624a2 2 0 00-2 2v1.558l.21.161a2 2 0 002.218.323L12 14zM12 14v4l-9 5v-5l9-4z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold">Cambridge School Greater Noida</h3>
+                        <p class="text-gray-400">Class VI-XI</p>
+                        <p class="text-gray-500 text-sm">Years Attended: 5 years+</p>
+                        <p class="mt-2 text-gray-300">
+                            Currently pursuing my 11th grade.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card p-6 mb-8" id="certificates">
+            <h2 class="gradient-text text-2xl font-bold section-title">Certificates</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="certificate-cards-container">
+                </div>
+        </div>
+
+        <div class="card p-6 mb-8" id="honors-awards">
+            <h2 class="gradient-text-alt text-2xl font-bold section-title">Honors & Awards</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="honors-awards-container">
+                </div>
+        </div>
+        <div class="card p-6 mb-8" id="skills">
+            <h2 class="gradient-text-alt text-2xl font-bold section-title">Skills</h2>
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold mb-2">Technical Skills</h3>
+                <div class="flex flex-wrap">
+                    <span class="skill-pill">Computer Ethic</span>
+                    <span class="skill-pill">Responsible AI</span>
+                    <span class="skill-pill">AI Productivity</span>
+                    <span class="skill-pill">Artificial Intelligence for Business</span>
+                    <span class="skill-pill">Search Engine Technology</span>
+                    <span class="skill-pill">Generative AI Tools</span>
+                    <span class="skill-pill">GitHub Copilot</span>
+                    <span class="skill-pill">Microsoft Office</span>
+                    <span class="skill-pill">GitHub</span>
+                    <span class="skill-pill">Office 365</span>
+                    <span class="skill-pill">Session Hijacking</span>
+                    <span class="skill-pill">Microsoft Copilot</span>
+                    <span class="skill-pill">Wordpress Development</span>
+                    <span class="skill-pill">WordPress</span>
+                    <span class="skill-pill">DOS Attacks</span>
+                    <span class="skill-pill">Python (Programming Language)</span>
+                    <span class="skill-pill">SQL Injection</span>
+                    <span class="skill-pill">System Hacking & Malware Usage</span>
+                    <span class="skill-pill">Trade Finance</span>
+                    <span class="skill-pill">Non-Fungible Tokens (NFTs)</span>
+                    <span class="skill-pill">Structured Query Language</span>
+                    <span class="skill-pill">Social Engineering</span>
+                    <span class="skill-pill">Search Engine Optimization (SEO)</span>
+                    <span class="skill-pill">Footprinting & Scanning</span>
+                    <span class="skill-pill">Data Science</span>
+                    <span class="skill-pill">Data Analysis</span>
+                    <span class="skill-pill">NumPy</span>
+                    <span class="skill-pill">Cryptography</span>
+                    <span class="skill-pill">Coding Experience</span>
+                    <span class="skill-pill">Stock Market</span>
+                    <span class="skill-pill">Initial Public Offerings (IPO)</span>
+                    <span class="skill-pill">User Experience (UX)</span>
+                    <span class="skill-pill">User Interface Design</span>
+                    <span class="skill-pill">Generative AI</span>
+                    <span class="skill-pill">Artificial Intelligence (AI)</span>
+                    <span class="skill-pill">Network Administration</span>
+                    <span class="skill-pill">System Administration</span>
+                    <span class="skill-pill">Network Security</span>
+                </div>
+            </div>
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold mb-2">Soft Skills</h3>
+                <div class="flex flex-wrap">
+                    <span class="skill-pill">Problem Solving</span>
+                    <span class="skill-pill">Critical Thinking</span>
+                    <span class="skill-pill">Teamwork</span>
+                    <span class="skill-pill">Communication</span>
+                    <span class="skill-pill">Adaptability</span>
+                    <span class="skill-pill">Time Management</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card p-6 mb-8" id="projects">
+            <h2 class="gradient-text text-2xl font-bold section-title">Projects</h2>
+            <p class="text-gray-300 text-center py-8">Coming Soon</p>
+        </div>
+
+        <div class="card p-6 mb-8" id="contact">
+            <h2 class="gradient-text-alt text-2xl font-bold section-title">Contact</h2>
+            <p class="text-gray-300 mb-6 text-center">
+                I'm always open to new opportunities and collaborations. Feel free to reach out!
+            </p>
+            <div class="flex justify-center space-x-4 mb-6">
+                <a href="mailto:gamerkabir2009@gmail.com" class="flex items-center text-green-400 hover:text-green-300 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                    gamerkabir2009@gmail.com
+                </a>
+                <a href="https://www.instagram.com/gamerkabir2009/" target="_blank" class="flex items-center text-green-400 hover:text-green-300 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.013 4.85.072 1.344.062 2.308.283 3.19.645.882.363 1.636.953 2.274 1.591.638.638 1.228 1.392 1.591 2.274.362.882.583 1.846.645 3.19.059 1.266.072 1.646.072 4.85s-.013 3.584-.072 4.85c-.062 1.344-.283 2.308-.645 3.19-.363.882-.953 1.636-1.591 2.274-.638.638-1.392 1.228-2.274 1.591-.882.362-1.846.583-3.19.645-1.266.059-1.646.072-4.85.072s-3.584-.013-4.85-.072c-1.344-.062-2.308-.283-3.19-.645-.882-.363-1.636-.953-2.274-1.591-.638-.638-1.392-1.228-1.591-2.274-.362-.882-.583-1.846-.645-3.19-.059-1.266-.072-1.646-.072-4.85s.013-3.584.072-4.85c.062-1.344.283-2.308.645-3.19.363-.882.953-1.636 1.591-2.274.638-.638 1.392-1.228 2.274-1.591.882-.362 1.846-.583 3.19-.645 1.266-.059 1.646-.072 4.85-.072zm0-2.163c-3.264 0-3.668.014-4.949.073-1.42.067-2.61.3-3.74.757-1.127.457-2.073 1.155-2.913 1.995-.84.84-1.538 1.786-1.995 2.913-.457 1.13-.69 2.32-.757 3.74-.059 1.281-.073 1.685-.073 4.949s.014 3.668.073 4.949c.067 1.42.3 2.61.757 3.74.457 1.127 1.155 2.073 1.995 2.913.84.84 1.786 1.538 2.913 1.995 1.13.457 2.32.69 3.74.757 1.281.059 1.685.073 4.949.073s3.668-.014 4.949-.073c1.42-.067 2.61-.3 3.74-.757 1.127-.457 2.073-1.155 2.913-1.995-.84-.84-1.786-1.538-2.913-1.995-1.13-.457-2.32-.69-3.74-.757-1.281-.059-1.685-.073-4.949-.073zm0 5.838c3.403 0 6.162 2.759 6.162 6.162s-2.759 6.162-6.162 6.162-6.162-2.759-6.162-6.162c0-3.403 2.759-6.162 6.162-6.162zm0 2.163c-2.235 0-4 1.765-4 4s1.765 4 4 4 4-1.765 4-4-1.765-4-4-4zm6.406-11.845c-.79 0-1.432.642-1.432 1.432s.642 1.432 1.432 1.432 1.432-.642 1.432-1.432-.642-1.432-1.432-1.432z"/>
+                    </svg>
+                    Instagram
+                </a>
+                <a href="https://www.linkedin.com/in/kabirsaini/" target="_blank" class="flex items-center text-green-400 hover:text-green-300 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                    LinkedIn
+                </a>
+            </div>
+            <form class="space-y-4">
+                <div>
+                    <label for="name" class="block text-gray-300 text-sm font-bold mb-2">Name</label>
+                    <input type="text" id="name" name="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline" placeholder="Your Name">
+                </div>
+                <div>
+                    <label for="email" class="block text-gray-300 text-sm font-bold mb-2">Email</label>
+                    <input type="email" id="email" name="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline" placeholder="Your Email">
+                </div>
+                <div>
+                    <label for="message" class="block text-gray-300 text-sm font-bold mb-2">Message</label>
+                    <textarea id="message" name="message" rows="5" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline" placeholder="Your Message"></textarea>
+                </div>
+                <div class="flex justify-center">
+                    <button type="submit" class="btn-gradient text-white font-bold py-2 px-6 rounded-full focus:outline-none focus:shadow-outline">
+                        Send Message
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="bg-gradient-dark text-gray-400 text-center py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <p class="text-gray-400">&copy; 2023 Kabir Saini. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div class="certificate-modal" id="certificate-modal">
+        <div class="certificate-modal-content">
+            <button class="certificate-modal-close" id="certificate-modal-close">&times;</button>
+            <h3 class="text-xl font-bold mb-4 text-center gradient-text" id="modal-certificate-title"></h3>
+            <div class="certificate-preview">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.001 12.001 0 002.944 12a11.955 11.955 0 003.04 8.618A12.001 12.001 0 0012 21.056a11.955 11.955 0 008.618-3.04A12.001 12.001 0 0021.056 12a11.955 11.955 0 00-3.04-8.618z" />
+                </svg>
+            </div>
+            <p class="text-gray-300 mb-2" id="modal-certificate-org"></p>
+            <p class="text-gray-400 text-sm mb-4" id="modal-certificate-date"></p>
+            <div class="flex items-center justify-between bg-gray-800 p-3 rounded-md mb-4">
+                <span id="modal-credential-id" class="credential-id-display"></span>
+                <button class="copy-button" onclick="copyToClipboard(document.getElementById('modal-credential-id').textContent)">Copy ID</button>
+            </div>
+            <a href="#" target="_blank" class="btn-gradient text-white font-bold py-2 px-4 rounded-md w-full text-center block" id="modal-view-credential">View Credential</a>
+        </div>
+    </div>
+
+    <script>
+        // Canvas setup for futuristic background
+        const canvas = document.getElementById('futuristicCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        const maxParticles = 80; // Increased particle count for more density
+        const lineDistance = 150; // Max distance for lines to connect
+        const mouseRadius = 120; // Radius of mouse interaction
+
+        // Mouse position object
+        let mouse = {
+            x: null,
+            y: null
+        };
+
+        // Update mouse position on mouse move
+        window.addEventListener('mousemove', function(event) {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        });
+
+        // Clear mouse position on mouse leave
+        window.addEventListener('mouseout', function() {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        // Particle class definition
+        class Particle {
+            constructor(x, y, directionX, directionY, size, color) {
+                this.x = x;
+                this.y = y;
+                this.directionX = directionX;
+                this.directionY = directionY;
+                this.size = size;
+                this.color = color;
+            }
+
+            // Method to draw individual particle
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+
+            // Method to update particle position and handle interactions
+            update() {
+                // Check if particle is still within canvas
+                if (this.x + this.size > canvas.width || this.x - this.size < 0) {
+                    this.directionX = -this.directionX;
+                }
+                if (this.y + this.size > canvas.height || this.y - this.size < 0) {
+                    this.directionY = -this.directionY;
+                }
+
+                this.x += this.directionX;
+                this.y += this.directionY;
+
+                // Mouse interaction
+                if (mouse.x !== null && mouse.y !== null) {
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < mouseRadius) {
+                        let forceDirectionX = dx / distance;
+                        let forceDirectionY = dy / distance;
+                        let force = (mouseRadius - distance) / mouseRadius;
+                        let directionX = forceDirectionX * force * 2; // Repel force
+                        let directionY = forceDirectionY * force * 2;
+
+                        this.x -= directionX;
+                        this.y -= directionY;
+                    }
+                }
+
+                this.draw();
+            }
+        }
+
+        // Create particles
+        function initParticles() {
+            particles = []; // Clear existing particles
+            for (let i = 0; i < maxParticles; i++) {
+                let size = Math.random() * 3 + 1; // Particle size between 1 and 4
+                let x = Math.random() * (canvas.width - size * 2) + size;
+                let y = Math.random() * (canvas.height - size * 2) + size;
+                let directionX = (Math.random() * 0.5) - 0.25; // Slower movement
+                let directionY = (Math.random() * 0.5) - 0.25;
+                let color = `rgba(16, 185, 129, ${Math.random() * 0.5 + 0.3})`; // Greenish with varying opacity
+
+                particles.push(new Particle(x, y, directionX, directionY, size, color));
+            }
+        }
+
+        // Connect particles with lines
+        function connectParticles() {
+            let opacityValue = 1;
+            for (let a = 0; a < particles.length; a++) {
+                for (let b = a; b < particles.length; b++) {
+                    let distance = ((particles[a].x - particles[b].x) * (particles[a].x - particles[b].x)) +
+                                   ((particles[a].y - particles[b].y) * (particles[a].y - particles[b].y));
+
+                    if (distance < lineDistance * lineDistance) {
+                        opacityValue = 1 - (distance / (lineDistance * lineDistance));
+                        ctx.strokeStyle = `rgba(16, 185, 129, ${opacityValue})`; // Greenish lines
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[a].x, particles[a].y);
+                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        // Animation loop
+        function animateCanvas() {
+            requestAnimationFrame(animateCanvas);
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas each frame
+
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+            }
+            connectParticles();
+        }
+
+        // Handle canvas resizing
+        window.addEventListener('resize', function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles(); // Re-initialize particles on resize
+        });
+
+        // Initial setup on window load
+        window.onload = function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+            animateCanvas();
+        };
+
+        // Certificate modal functionality
+        const certificateModal = document.getElementById('certificate-modal');
+        const certificateModalClose = document.getElementById('certificate-modal-close');
+        const modalCertificateTitle = document.getElementById('modal-certificate-title');
+        const modalCertificateOrg = document.getElementById('modal-certificate-org');
+        const modalCertificateDate = document.getElementById('modal-certificate-date');
+        const modalCredentialId = document.getElementById('modal-credential-id');
+        const modalViewCredential = document.getElementById('modal-view-credential');
+
+        // Certificate Data from original file
+        const certificates = [
+            {
+                name: "Foundations of Stock Trading",
+                organization: "PW Skills",
+                issueDate: "December 2024",
+                credentialId: "d78c43a0-7281-4ef6-9d30-43c27f735135",
+                credentialUrl: "https://pwskills.com/learn/certificate/d78c43a0-7281-4ef6-9d30-43c27f735135"
+            },
+            {
+                name: "SQL (Structured Query Language)",
+                organization: "Programming Hub",
+                issueDate: "April 2024",
+                credentialId: "1713956618750",
+                credentialUrl: "https://programminghub.io/certificates"
+            },
+            {
+                name: "NFT (Non-Fungible Tokens)",
+                organization: "Programming Hub",
+                issueDate: "April 2024",
+                credentialId: "1713597154436",
+                credentialUrl: "https://programminghub.io/certificates"
+            },
+            {
+                name: "Basic Python",
+                organization: "Programming Hub",
+                issueDate: "April 2024",
+                credentialId: "1713615736086",
+                credentialUrl: "https://programminghub.io/certificates"
+            },
+            {
+                name: "Python for Data Science, AI & Development",
+                organization: "IBM",
+                issueDate: "May 2024",
+                credentialId: "A64YMT6MAYCE",
+                credentialUrl: "https://www.coursera.org/account/accomplishments/records/A64YMT6MAYCE"
+            },
+            {
+                name: "National Coding League (Regional Qualification)",
+                organization: "Scaler School Of Technology",
+                issueDate: "May 2024",
+                credentialId: "N/A", // Credential ID not explicitly provided, using N/A
+                credentialUrl: "https://moonshot.scaler.com/s/sl/zmwzmu_zpQ"
+            },
+            {
+                name: "Advanced Search Engine Optimization (SEO)",
+                organization: "Programming Hub",
+                issueDate: "May 2024",
+                credentialId: "1715407174913",
+                credentialUrl: "https://programminghub.io/certificates"
+            },
+            {
+                name: "Advance WordPress Development",
+                organization: "Programming Hub",
+                issueDate: "May 2024",
+                credentialId: "1714657203565",
+                credentialUrl: "https://programminghub.io/certificates"
+            },
+            {
+                name: "UI/UX",
+                organization: "Programming Hub",
+                issueDate: "July 2024",
+                credentialId: "1720271443702",
+                credentialUrl: "https://programminghub.io/certificates"
+            },
+            {
+                name: "Learning Microsoft 365 Copilot and Business Chat",
+                organization: "LinkedIn",
+                issueDate: "December 2024",
+                credentialId: "N/A", // Credential ID not explicitly provided, using N/A
+                credentialUrl: "https://www.linkedin.com/learning/certificates/aee08c821fc250e48450ecd343c46b95b93c1b77581e39808bdba6392ba84a04"
+            },
+            {
+                name: "Basics Of Cyber Securities",
+                organization: "Udemy",
+                issueDate: "December 2024",
+                credentialId: "N/A", // Credential ID not explicitly provided, using N/A
+                credentialUrl: "https://www.udemy.com/certificate/UC-2ba266a7-54b0-4645-b9ab-15377f955fdc/"
+            },
+            {
+                name: "What Is Generative AI?",
+                organization: "LinkedIn",
+                issueDate: "January 2025",
+                credentialId: "N/A", // Credential ID not explicitly provided, using N/A
+                credentialUrl: "https://www.linkedin.com/learning/certificates/d94d3c456149126773c0cf7cdb045cbc4b6f709510a071cc381032bb2312622b"
+            },
+            {
+                name: "Streamlining Your Work with Microsoft Copilot",
+                organization: "LinkedIn",
+                issueDate: "January 2025",
+                credentialId: "N/A", // Credential ID not explicitly provided, using N/A
+                credentialUrl: "https://www.linkedin.com/learning/certificates/e047cb37f21cbf78905ed3fb3099391a78c4fe4c473ecfebff65534017d8987f"
+            },
+            {
+                name: "Practical GitHub Project Management and Collaboration",
+                organization: "LinkedIn",
+                issueDate: "January 2025",
+                credentialId: "N/A", // Credential ID not explicitly provided, using N/A
+                credentialUrl: "https://www.linkedin.com/learning/certificates/3892c111d06ee601c2d49657c30c196496e5ae962f9005898319fdc5a839e3ae"
+            },
+            {
+                name: "Practical GitHub Copilot",
+                organization: "LinkedIn",
+                issueDate: "January 2025",
+                credentialId: "N/A", // Credential ID not explicitly provided, using N/A
+                credentialUrl: "https://www.linkedin.com/learning/certificates/93b02d8f7ed1088938baf1b26f3f4ffa917aee42e2ee4c2a0048f80169230ea8"
+            },
+            {
+                name: "Practical GitHub Code Search",
+                organization: "LinkedIn",
+                issueDate: "January 2025",
+                credentialId: "N/A", // Credential ID not explicitly provided, using N/A
+                credentialUrl: "https://www.linkedin.com/learning/certificates/890bc703986c2cb209ed9ef9f529f2ab7151ed807eb7979242e64905b60103b0"
+            },
+            {
+                name: "Practical GitHub Actions",
+                organization: "LinkedIn",
+                issueDate: "January 2025",
+                credentialId: "N/A", // Credential ID not explicitly provided, using N/A
+                credentialUrl: "https://www.linkedin.com/learning/certificates/b169c95f7d43d69c8861c2443554e929cd8480860beca6c709b1bee8cee87884"
+            },
+            {
+                name: "Introduction to Artificial Intelligence",
+                organization: "LinkedIn",
+                issueDate: "January 2025",
+                credentialId: "N/A", // Credential ID not explicitly provided, using N/A
+                credentialUrl: "https://www.linkedin.com/learning/certificates/edda84fc6db746b27510b8f3e357184fb441fb44d2caa68fe2957be9a3f83edd"
+            },
+            {
+                name: "Generative AI: The Evolution of Thoughtful Online Search",
+                organization: "LinkedIn",
+                issueDate: "January 2025",
+                credentialId: "N/A", // Credential ID not explicitly provided, using N/A
+                credentialUrl: "https://www.linkedin.com/learning/certificates/4bf1fb6ce2b82ef77880223bf8a14699c8530e8faa8986c51b9d633eb9dbbe82"
+            },
+            {
+                name: "Ethics in the Age of Generative AI",
+                organization: "LinkedIn",
+                issueDate: "January 2025",
+                credentialId: "N/A", // Credential ID not explicitly provided, using N/A
+                credentialUrl: "https://www.linkedin.com/learning/certificates/fa5c8522f5292f7c10f1883557c1d7f5eff39e599eb6970a01caecc26376a26e"
+            },
+            {
+                name: "Certificate of Completion - “I built a virtual agent at IBM TechXchange Dev Day: Virtual Agents.”",
+                organization: "BeMyApp",
+                issueDate: "January 2025",
+                credentialId: "c9b708e9-73f3-40d1-b004-ac844ef3d562",
+                credentialUrl: "https://www.virtualbadge.io/certificate-validator?credential=c9b708e9-73f3-40d1-b004-ac844ef3d562"
+            },
+            {
+                name: "Career Essentials in GitHub Professional Certificate",
+                organization: "GitHub",
+                issueDate: "January 2025",
+                credentialId: "N/A", // Credential ID not explicitly provided, using N/A
+                credentialUrl: "https://www.linkedin.com/learning/certificates/456e66ff1de8a830af817f991c83df0769d46b29f6d4dbf76bc60a3d0990f1af?trk=share_certificate"
+            },
+            {
+                name: "Career Essentials in Generative AI by Microsoft and LinkedIn",
+                organization: "Microsoft",
+                issueDate: "January 2025",
+                credentialId: "N/A", // Credential ID not explicitly provided, using N/A
+                credentialUrl: "https://www.linkedin.com/learning/certificates/922a9ef309e606c5c621f4335a6e21c8d3a020a4d3169ea656bf989f6a6f1d34"
+            },
+            {
+                name: "Career Essentials in System Administration by Microsoft and LinkedIn",
+                organization: "Microsoft",
+                issueDate: "February 2025",
+                credentialId: "N/A", // Credential ID not explicitly provided, using N/A
+                credentialUrl: "https://www.linkedin.com/learning/certificates/54778a81e510a1cc0afc0825417ef4b3701cc3de05ec50ed264b1c96a928c76e?trk=share_certificate"
+            },
+            {
+                name: "AI in the classroom",
+                organization: "Canva",
+                issueDate: "April 2025",
+                credentialId: "d3b7cb",
+                credentialUrl: "https://canva.com/designschool/certification-award/d3b7cb4e-8605-4199-acfc-674b13a910dc"
+            }
+        ];
+
+        // Honors & Awards Data
+        const honorsAwards = [
+            {
+                title: "CHUDAMANI RATNAM AWARD",
+                issuingOrganization: "The Cambridge Schools",
+                date: "Oct 2023",
+                description: "Participated in the CHUDAMANI RATNAM AWARD, secured 2nd position in prelims at Cambridge School Greater Noida, ranked 4th in finals at Cambridge School Indirapuram. Won a cash prize for outstanding innovation in science exhibition.",
+                image: "https://placehold.co/128x128/0f172a/10b981?text=Coming+Soon" // Placeholder image with text
+            },
+            {
+                title: "TECHNO TRIVIA SHOWDOWN - IT QUIZ",
+                issuingOrganization: "Khaitan School Noida",
+                date: "Nov 2023",
+                description: "I am thrilled to announce that I clinched the FIRST POSITION in the exhilarating TECHNO TRIVIA SHOWDOWN - IT QUIZ, part of the prestigious PANCHATATVAM '23 event at Khaitan Fest 2023-24. Competing in this intensive IT quiz at Khaitan School, Noida, was an incredible experience, challenging my knowledge and passion for technology. Grateful for the opportunity to showcase my skills and looking forward to continuing my journey of innovation and excellence in the dynamic field of IT.",
+                image: "https://placehold.co/128x128/0f172a/10b981?text=Coming+Soon" // Placeholder image with text
+            },
+            {
+                title: "App Making - Code Wars",
+                issuingOrganization: "Vishwa Bharti School Greater Noida",
+                date: "Oct 2023",
+                description: "I'm excited to announce that I clinched the FIRST POSITION in the thrilling App Making - Code Wars competition at SUPERNOVA 2023, hosted at Vishwa Bharti School, Greater Noida. Collaborating with fellow innovators to create cutting-edge applications was an inspiring experience, showcasing our collective talent and dedication to technological advancement. Grateful for the opportunity to lead in this dynamic field and looking forward to continued growth and innovation in app development.",
+                image: "https://placehold.co/128x128/0f172a/10b981?text=Coming+Soon" // Placeholder image with text
+            },
+            {
+                title: "IT Quiz, Part of TECHNOLYMPICS 23",
+                issuingOrganization: "Cambridge School Noida",
+                date: "September 2023",
+                description: "I'm proud to announce my achievement of securing the SECOND POSITION in the fiercely competitive Battle of Brains - a challenging IT quiz, part of TECHNOLYMPICS 23', held at Cambridge School, Noida. Engaging in this intellectual showdown was an exhilarating experience, testing my knowledge and strategic thinking in the realm of technology. Grateful for the opportunity to compete among brilliant minds and looking forward to continued growth and success in the IT domain.",
+                image: "https://placehold.co/128x128/0f172a/10b981?text=Coming+Soon" // Placeholder image with text
+            },
+            {
+                title: "Innovate4Change (App Making Competition)",
+                issuingOrganization: "Lotus Valley International School, Greater Noida West!",
+                date: "August 2024",
+                description: "🎉 Excited to share that I secured the Second Position in the Innovate4Change (App Making Competition) held by Lotus Valley International School, Greater Noida West! 🥈 Competing in this event was a fantastic experience where we were challenged to develop AI prototypes addressing important Sustainable Development Goals (SDGs) such as Good Health and Well-being, Quality Education, and Climate Action.",
+                image: "https://placehold.co/128x128/0f172a/10b981?text=Coming+Soon" // Placeholder image with text
+            },
+            {
+                title: "NARRATIVE PHOTOGRAPHY",
+                issuingOrganization: "Cambridge School Greater Noida",
+                date: "Aug 2023",
+                description: "I'm excited to share my participation in the captivating NARRATIVE PHOTOGRAPHY event hosted at Cambridge School, Greater Noida. It was an enriching experience to delve into the art of storytelling through photography, exploring narratives that captivate and inspire. Grateful for the opportunity to immerse myself in this creative journey and looking forward to continuing to explore the world through the lens of my camera.",
+                image: "https://placehold.co/128x128/0f172a/10b981?text=Coming+Soon" // Placeholder image with text
+            },
+            {
+                title: "Appathon - Annual Science and Technology Fest",
+                issuingOrganization: "Cambridge School Srinivaspuri",
+                date: "October 2024",
+                description: "I'm thrilled to share that I participated and won in the Inter-school Innovation Annual Science and Technology Fest, held at Cambridge School Srinivaspuri. Competing in the Appathon event, I secured 1st position in both the prelims and final rounds! The Appathon challenged us to design and develop innovative applications aimed at enhancing digital health and well-being. It was an amazing experience to showcase my creativity, problem-solving abilities, and technical expertise in app development. This achievement has inspired me to keep exploring tech solutions for real-world problems.",
+                image: "https://placehold.co/128x128/0f172a/10b981?text=Coming+Soon" // Placeholder image with text
+            },
+            {
+                title: "THE BOUT GSP's Annual Quiz on Climate Change",
+                issuingOrganization: "Centre for Science and Environment at the Indian Habitat Center",
+                date: "January 2024",
+                description: "I had the privilege of participating in the Green School Program hosted by the Centre for Science and Environment at the Indian Habitat Center. It was an enriching experience engaging with environmental issues and solutions. I also took part in 'THE BOUT GSP's Annual Quiz on Climate Change,' which further deepened my understanding of climate issues. Grateful for the opportunity to contribute to sustainability efforts and looking forward to continuing my journey towards a greener future.",
+                image: "https://placehold.co/128x128/0f172a/10b981?text=Coming+Soon" // Placeholder image with text
+            },
+            {
+                title: "National Coding League '24",
+                issuingOrganization: "Scaler School of Technology",
+                date: "May 2024",
+                description: "I'm thrilled to announce that I've qualified for the North/South Regional Semi-finals of the National Coding League '24, organized by Scaler School of Technology - The Ultimate Tech Showdown for Young Coders! Even more exciting, I am among the top 100 out of 5,275 teams! This opportunity is a huge milestone in my coding journey, and I'm excited to compete alongside some of the brightest young minds in the field. The competition has been intense, and reaching this stage is a testament to my hard work and passion for technology.",
+                image: "https://placehold.co/128x128/0f172a/10b981?text=Coming+Soon" // Placeholder image with text
+            },
+            {
+                title: "Verve'23 Technika QuizIT",
+                issuingOrganization: "Cambridge School Indirapuram",
+                date: "August 2023",
+                description: "I am thrilled to share that I emerged victorious at the prestigious Verve'23 Technika QuizIT, a highly competitive IT quiz held at Cambridge School, Indirapuram. It was an honor to showcase my knowledge and skills in the field of information technology, and I am grateful for the opportunity to excel in such a challenging environment. Looking forward to continuing my journey of learning and growth in the tech world!",
+                image: "https://placehold.co/128x128/0f172a/10b981?text=Coming+Soon" // Placeholder image with text
+            }
+        ];
+
+        function generateCertificateCards() {
+            const container = document.getElementById('certificate-cards-container');
+            if (!container) return; // Exit if container not found
+
+            container.innerHTML = ''; // Clear existing content to prevent duplicates
+
+            certificates.forEach(cert => {
+                // All certificates are considered valid as per user request
+                const isExpired = false; // Always false
+                const badgeClass = isExpired ? 'expired' : ''; // This will now always be an empty string
+
+                const cardHtml = `
+                    <div class="certificate-card p-4 card" data-credential-url="${cert.credentialUrl}" data-credential-id="${cert.credentialId}">
+                        <div class="flex items-center mb-4">
+                            <div class="certificate-logo mr-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.002 12.002 0 002 12c0 2.977 1.287 5.748 3.629 7.618L12 22l6.371-3.382C20.713 17.748 22 14.977 22 12c0-3.056-.543-5.944-1.382-8.618z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold">${cert.name}</h3>
+                                <p class="text-gray-400 text-sm">${cert.organization}</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 text-sm mb-4">
+                            Issued: ${cert.issueDate}
+                        </p>
+                        <div class="flex justify-between items-center text-gray-500 text-xs">
+                            <span>Issued: ${cert.issueDate.split(' ')[0]} ${cert.issueDate.split(' ')[1].substring(0, 3)}</span>
+                            <span>Expires: N/A</span>
+                            <span class="certificate-badge ${badgeClass}">Valid</span>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', cardHtml);
+            });
+
+            // Add event listeners to the newly created cards
+            document.querySelectorAll('.certificate-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const credentialUrl = this.dataset.credentialUrl;
+                    const credentialId = this.dataset.credentialId;
+                    openCertificateModal(credentialUrl, credentialId);
+                });
+            });
+        }
+
+        // Function to show the certificate modal
+        function openCertificateModal(credentialUrl, credentialId) {
+            const certificateModalElement = document.getElementById('certificate-modal');
+            const modalTitle = certificateModalElement.querySelector('#modal-certificate-title');
+            const modalOrg = certificateModalElement.querySelector('#modal-certificate-org');
+            const modalDate = certificateModalElement.querySelector('#modal-certificate-date');
+            const modalId = certificateModalElement.querySelector('#modal-credential-id');
+            const modalLink = certificateModalElement.querySelector('#modal-view-credential');
+            const copyIdButton = certificateModalElement.querySelector('.copy-button');
+
+            // Find the certificate data based on credentialId or URL
+            const cert = certificates.find(c => c.credentialId === credentialId || c.credentialUrl === credentialUrl);
+
+            if (cert) {
+                modalTitle.textContent = cert.name;
+                modalOrg.textContent = `Issued by: ${cert.organization}`;
+                modalDate.textContent = `Date: ${cert.issueDate}`;
+                modalId.textContent = `ID: ${cert.credentialId}`;
+                modalLink.href = cert.credentialUrl;
+                copyIdButton.setAttribute('data-copy-text', cert.credentialId);
+            } else {
+                // Fallback if certificate data not found (shouldn't happen with correct data)
+                modalTitle.textContent = "Certificate Details";
+                modalOrg.textContent = "Issued by: N/A";
+                modalDate.textContent = "Date: N/A";
+                modalId.textContent = `ID: ${credentialId}`;
+                modalLink.href = credentialUrl;
+                copyIdButton.setAttribute('data-copy-text', credentialId);
+            }
+
+            certificateModalElement.classList.add('active');
+        }
+
+        certificateModalClose.addEventListener('click', () => {
+            certificateModal.classList.remove('active');
+        });
+
+        certificateModal.addEventListener('click', (e) => {
+            if (e.target === certificateModal) {
+                certificateModal.classList.remove('active');
+            }
+        });
+
+        // Function to copy text to clipboard using document.execCommand
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed'; // Prevent scrolling to bottom of page in MS Edge.
+            textarea.style.opacity = 0;
+            document.body.appendChild(textarea);
+            textarea.focus();
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                // Optional: Provide visual feedback to the user, e.g., a temporary "Copied!" message
+                const messageDiv = document.createElement('div');
+                messageDiv.textContent = 'Copied!';
+                messageDiv.style.cssText = `
+                    position: fixed;
+                    bottom: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background-color: #10b981;
+                    color: white;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    z-index: 1001;
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                `;
+                document.body.appendChild(messageDiv);
+                setTimeout(() => {
+                    messageDiv.style.opacity = 1;
+                }, 10);
+                setTimeout(() => {
+                    messageDiv.style.opacity = 0;
+                    messageDiv.addEventListener('transitionend', () => messageDiv.remove(), { once: true });
+                }, 1500);
+
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+                // Handle error, e.g., show a message to the user that copying failed
+            } finally {
+                document.body.removeChild(textarea);
+            }
+        }
+
+        // Function to generate Honors & Awards cards
+        function generateHonorsAwardsCards() {
+            const container = document.getElementById('honors-awards-container');
+            if (!container) return;
+
+            container.innerHTML = ''; // Clear existing content
+
+            honorsAwards.forEach(award => {
+                const awardCard = document.createElement('div');
+                awardCard.classList.add('award-item', 'p-4', 'rounded-lg', 'shadow-md', 'flex', 'flex-col', 'md:flex-row', 'items-start', 'space-y-4', 'md:space-y-0', 'md:space-x-4');
+                awardCard.innerHTML = `
+                    <div class="flex-shrink-0">
+                        <img src="${award.image}" alt="${award.title} Image" class="w-32 h-32 object-cover rounded-md border border-gray-700" onerror="this.onerror=null;this.src='https://placehold.co/128x128/0f172a/10b981?text=Coming+Soon';">
+                    </div>
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-semibold gradient-text-alt">${award.title}</h3>
+                        <p class="text-gray-400 text-sm mt-1">Issuing Organization: <span class="text-green-400">${award.issuingOrganization}</span></p>
+                        <p class="text-gray-400 text-sm">Date: <span class="text-green-400">${award.date}</span></p>
+                        <p class="text-gray-300 mt-2">${award.description}</p>
+                    </div>
+                `;
+                container.appendChild(awardCard);
+            });
+        }
+
+
+        // Initialize all sections on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            generateCertificateCards();
+            generateHonorsAwardsCards();
+        });
+    </script>
+</body>
+</html>
